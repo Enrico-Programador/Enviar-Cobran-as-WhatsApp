@@ -1,0 +1,20 @@
+var planilha = SpreadsheetApp.getActiveSpreadsheet();
+var cobrancas = planilha.getSheetByName("Cobrancas");
+var transferir = cobrancas.getLastRow()
+
+function WhatsApp(){
+
+for(var i = 2; i<=transferir; i++){  
+var whatsappLinks = [];
+var celular = cobrancas.getRange([i],[5]).getValue(); //telefone coluna P
+var nome = cobrancas.getRange([i],[1]).getValue()
+var texto = cobrancas.getRange([i],[2]).getValue()
+
+var mensagem = "Olá " + nome + texto; //Junta os dados para msg
+var whatsappLink = "https://api.whatsapp.com/send?phone=" + celular + "&text=" + encodeURIComponent(mensagem);
+var displayText = "Clique para enviar"; // texto do hyperlink
+var hyperLinkFormula = '=HYPERLINK("' + whatsappLink + '"; "' + displayText + '")';
+
+cobrancas.getRange([i],[7]).setFormula(hyperLinkFormula);
+ }
+}
